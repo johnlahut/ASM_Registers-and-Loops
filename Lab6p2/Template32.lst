@@ -1,0 +1,116 @@
+Microsoft (R) Macro Assembler Version 12.00.21005.1	    03/08/16 13:36:51
+	Lab6b.as					     Page 1 - 1
+
+
+				;@Author:		John Lahut
+				;@Date:			3/8/2016
+				;@Project:		Lab6
+				;@Filename:		Lab6p2.asm
+				;@I/O:			All I/O are done via console
+				;@Assumptions:	None
+				;@Purpose:		Demonstrates use of the LABEL directive.
+				;				Takes two smaller sizes values (2 WORDs) and creates a new type LongValue of size DWORD
+
+
+
+				title    Lab6b.asm    ; YOUR NAME HERE 
+
+				.386
+				.model flat, stdcall	;Protected Mode
+
+				;Declare named constants
+ = 0000000A			 LF                equ 0Ah
+ = 0000000D			 CR                equ 0Dh
+
+				;FILL IN CODE for Procedure prototypes
+				WriteHex proto
+				Crlf proto
+				ExitProcess proto, :dword
+
+
+				.stack 100h
+
+ 00000000			.data
+ 00000000				LongValue LABEL DWORD
+ 00000000 5678				val1 WORD 5678h
+ 00000002 1234				val2 WORD 1234h
+
+ 00000000			.code
+
+ 00000000			main proc
+
+
+					  ; mov LongValue into the EAX here:
+ 00000000  A1 00000000 R		  mov eax, LongValue
+
+					  ; Output the contents of the EAX here:
+ 00000005  E8 00000000 E		  call WriteHex
+
+					  ; Output a newline:
+ 0000000A  E8 00000000 E		  call Crlf
+					
+					  
+				      ;FILL IN CODE that terminates the program
+ 0000000F  E8 00000000 E		  call ExitProcess
+
+
+ 00000014			main endp
+
+				end main
+
+				comment *
+				;@Author:		John Lahut
+				;@Date:			3/8/2016
+				;@Project:		Lab6
+				;@Filename:		Lab6p1.asm
+				;@I/O:			All I/O are done via console
+				;@Assumptions:	None
+
+*
+Microsoft (R) Macro Assembler Version 12.00.21005.1	    03/08/16 13:36:51
+	Lab6b.as					     Symbols 2 - 1
+
+
+
+
+Segments and Groups:
+
+                N a m e                 Size     Length   Align   Combine Class
+
+FLAT . . . . . . . . . . . . . .	GROUP
+STACK  . . . . . . . . . . . . .	32 Bit	 00000100 DWord	  Stack	  'STACK'	 
+_DATA  . . . . . . . . . . . . .	32 Bit	 00000004 DWord	  Public  'DATA'	
+_TEXT  . . . . . . . . . . . . .	32 Bit	 00000014 DWord	  Public  'CODE'	
+
+
+Procedures, parameters, and locals:
+
+                N a m e                 Type     Value    Attr
+
+Crlf . . . . . . . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External STDCALL
+ExitProcess  . . . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External STDCALL
+WriteHex . . . . . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External STDCALL
+main . . . . . . . . . . . . . .	P Near	 00000000 _TEXT	Length= 00000014 Public STDCALL
+
+
+Symbols:
+
+                N a m e                 Type     Value    Attr
+
+@CodeSize  . . . . . . . . . . .	Number	 00000000h   
+@DataSize  . . . . . . . . . . .	Number	 00000000h   
+@Interface . . . . . . . . . . .	Number	 00000003h   
+@Model . . . . . . . . . . . . .	Number	 00000007h   
+@code  . . . . . . . . . . . . .	Text   	 _TEXT
+@data  . . . . . . . . . . . . .	Text   	 FLAT
+@fardata?  . . . . . . . . . . .	Text   	 FLAT
+@fardata . . . . . . . . . . . .	Text   	 FLAT
+@stack . . . . . . . . . . . . .	Text   	 FLAT
+CR . . . . . . . . . . . . . . .	Number	 0000000Dh   
+LF . . . . . . . . . . . . . . .	Number	 0000000Ah   
+LongValue  . . . . . . . . . . .	DWord	 00000000 _DATA	
+val1 . . . . . . . . . . . . . .	Word	 00000000 _DATA	
+val2 . . . . . . . . . . . . . .	Word	 00000002 _DATA	
+
+	   0 Warnings
+	   0 Errors

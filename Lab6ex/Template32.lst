@@ -1,0 +1,142 @@
+Microsoft (R) Macro Assembler Version 12.00.21005.1	    03/08/16 10:51:00
+	IntEx.as					     Page 1 - 1
+
+
+
+				title   IntEx.asm
+
+				; Purpose:  This program reads 3 integer values, num1, num2 and num3,
+				;               and computes and prints:    num1 * 2 - num2 + num3
+
+				.386
+				.model flat, stdcall
+
+				;Declare named constants
+ = 0000000A			  LF               equ 0Ah
+ = 0000000D			  CR               equ 0Dh
+
+				;External procedure prototypes
+				 ReadInt proto
+				 WriteInt proto
+				 WriteString proto
+				 Crlf proto
+				 ExitProcess proto, :dword
+
+				.stack 100h
+
+ 00000000			.data
+ 00000000 45 6E 74 65 72	        prompt  byte "Enter 3 numbers, one per line:", CR, LF, 0
+	   20 33 20 6E 75
+	   6D 62 65 72 73
+	   2C 20 6F 6E 65
+	   20 70 65 72 20
+	   6C 69 6E 65 3A
+	   0D 0A 00
+ 00000021 54 68 65 20 72	        message byte "The result is:  ", 0
+	   65 73 75 6C 74
+	   20 69 73 3A 20
+	   20 00
+ 00000032 00000000		        num1    sdword  ?           ;Holds 1st value entered by user
+ 00000036 00000000		        num2    sdword  ?           ;Holds 2nd value entered by user
+ 0000003A 00000000		        num3    sdword  ?           ;Holds 3rd value entered by user
+
+ 00000000			.code
+
+ 00000000			main proc
+
+				    ;Print "Enter 3 numbers, one per line:"
+ 00000000  BA 00000000 R	     mov edx, offset prompt
+ 00000005  E8 00000000 E	     call WriteString
+
+				    ;Read num1, num2, num3
+ 0000000A  E8 00000000 E	     call ReadInt
+ 0000000F  A3 00000032 R	     mov num1, eax
+				   
+ 00000014  E8 00000000 E	     call ReadInt
+ 00000019  A3 00000036 R	     mov num2, eax                
+				 
+ 0000001E  E8 00000000 E	     call ReadInt
+ 00000023  A3 0000003A R	     mov num3, eax
+
+ 00000028  E8 00000000 E	     call Crlf              ;Print a blank line
+
+				    ;Compute eax = num1 * 2 - num2 + num3
+ 0000002D  A1 00000032 R	     mov eax, num1
+ 00000032  03 05 00000032 R	     add eax, num1
+ 00000038  2B 05 00000036 R	     sub eax, num2
+ 0000003E  03 05 0000003A R	     add eax, num3
+
+				    ;Print "The result is:" eax
+ 00000044  BA 00000021 R	     mov edx, offset message
+ 00000049  E8 00000000 E	     call WriteString
+ 0000004E  E8 00000000 E	     call WriteInt
+ 00000053  E8 00000000 E	     call Crlf
+
+				    ;Terminate the program
+ 00000058  6A 00		     push 0
+ 0000005A  E8 00000000 E	     call ExitProcess
+ 0000005F			main endp
+
+				end main
+
+				 
+				comment *
+				Enter 3 numbers, one per line:
+				25
+				30
+				40
+
+				The result is:  +60
+				Press any key to continue . . .
+				*
+Microsoft (R) Macro Assembler Version 12.00.21005.1	    03/08/16 10:51:00
+	IntEx.as					     Symbols 2 - 1
+
+
+
+
+Segments and Groups:
+
+                N a m e                 Size     Length   Align   Combine Class
+
+FLAT . . . . . . . . . . . . . .	GROUP
+STACK  . . . . . . . . . . . . .	32 Bit	 00000100 DWord	  Stack	  'STACK'	 
+_DATA  . . . . . . . . . . . . .	32 Bit	 0000003E DWord	  Public  'DATA'	
+_TEXT  . . . . . . . . . . . . .	32 Bit	 0000005F DWord	  Public  'CODE'	
+
+
+Procedures, parameters, and locals:
+
+                N a m e                 Type     Value    Attr
+
+Crlf . . . . . . . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External STDCALL
+ExitProcess  . . . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External STDCALL
+ReadInt  . . . . . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External STDCALL
+WriteInt . . . . . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External STDCALL
+WriteString  . . . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External STDCALL
+main . . . . . . . . . . . . . .	P Near	 00000000 _TEXT	Length= 0000005F Public STDCALL
+
+
+Symbols:
+
+                N a m e                 Type     Value    Attr
+
+@CodeSize  . . . . . . . . . . .	Number	 00000000h   
+@DataSize  . . . . . . . . . . .	Number	 00000000h   
+@Interface . . . . . . . . . . .	Number	 00000003h   
+@Model . . . . . . . . . . . . .	Number	 00000007h   
+@code  . . . . . . . . . . . . .	Text   	 _TEXT
+@data  . . . . . . . . . . . . .	Text   	 FLAT
+@fardata?  . . . . . . . . . . .	Text   	 FLAT
+@fardata . . . . . . . . . . . .	Text   	 FLAT
+@stack . . . . . . . . . . . . .	Text   	 FLAT
+CR . . . . . . . . . . . . . . .	Number	 0000000Dh   
+LF . . . . . . . . . . . . . . .	Number	 0000000Ah   
+message  . . . . . . . . . . . .	Byte	 00000021 _DATA	
+num1 . . . . . . . . . . . . . .	DWord	 00000032 _DATA	
+num2 . . . . . . . . . . . . . .	DWord	 00000036 _DATA	
+num3 . . . . . . . . . . . . . .	DWord	 0000003A _DATA	
+prompt . . . . . . . . . . . . .	Byte	 00000000 _DATA	
+
+	   0 Warnings
+	   0 Errors
